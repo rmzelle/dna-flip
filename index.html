@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>DNA-Flip</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon-32x32.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.0/css/bootstrap-theme.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <div class="navbar-brand">DNA-Flip</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-offset-1 col-sm-4">
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label for="input-text">Input Sequence (FASTA or plain)</label>
+          <textarea id="input-text" class="form-control source-input" rows="5" placeholder="ATGGCAGTT" autocomplete="off"></textarea>
+        </div>
+        <div class="btn-group btn-group-justified">
+          <label class="btn btn-primary">
+            <input type="radio" name="options" id="option1" value="forward" autocomplete="off" checked>
+            Forward<br/><span style="color:silver;font-size:small">5'-ATGGCAGTT-3'</span>
+            </input>
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="options" id="option2" value="reverse" autocomplete="off">
+            Reverse<br/><span style="color:silver;font-size:small">5'-TTGACGGTA-3'</span>
+            </input>
+          </label>
+        </div>
+        <div class="btn-group btn-group-justified">
+          <label class="btn btn-primary">
+            <input type="radio" name="options" id="option3" value="complement" autocomplete="off">
+              Complement<br/><span style="color:silver;font-size:small">5'-TACCGTCAA-3'</span>
+            </input>
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="options" id="option4" value="reverse-complement" autocomplete="off">
+            Reverse complement<br/><span style="color:silver;font-size:small">5'-AACTGCCAT-3'</span>
+            </input>
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="output-text">Output Sequence</label>
+          <textarea id="output-text" class="form-control source-input" rows="5" autocomplete="off" readonly></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-offset-1 col-sm-5">
+      <p><b>DNA-Flip</b> is a webpage for quickly obtaining the reverse, complement, or reverse complement of a DNA or RNA sequence. Sequence input may either be in the FASTA format or be plain sequence. Digits and whitespace are ignored and removed. Degenerate base symbols (per <a href="https://en.wikipedia.org/wiki/Nucleic_acid_notation">https://en.wikipedia.org/wiki/Nucleic_acid_notation</a>) are supported.</p>
+      <p>DNA-Flip is open source, free, and doesn't have any ads or trackers. I care about your privacy. This webpage uses your internet browser to perform the conversion, and your sequences never leave your computer.</p>
+      <p class="bg-info">Did you find this free tool useful? Consider <a href="https://www.patreon.com/rintzezelle">supporting my open-source work on Patreon</a> for as little as $1/month, or <a href="https://www.paypal.me/RintzeZelle/2.50">buy me a coffee via PayPal</a>.<br><br>For
+        feedback, or to report any issues, please <a href="https://github.com/rmzelle/dna-flip/issues">file an issue on GitHub</a> or ping me on <a href="https://twitter.com/rintzezelle">Twitter</a>.</p>
+      <!--
+      <ul class="nav nav-tabs" id="tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+        <li role="presentation"><a href="#documentation" aria-controls="documentation" role="tab" data-toggle="tab">Documentation</a></li>
+        <li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab">About</a></li>
+      </ul>
+      -->
+      <!-- Tab panes -->
+      <!--
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="settings">Settings</div>
+        <div role="tabpanel" class="tab-pane" id="documentation">
+          <table class="table table-condensed">
+          </table>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="about">...</div>
+      </div>
+      -->
+    </div>
+  </div>
+  </div>
+  
+  <div class="navbar navbar-fixed-bottom" role="navigation">
+    <div class="container-fluid">
+      <p class="navbar-text"><small>Created by <a href="http://rintze.zelle.me/">Rintze M. Zelle</a>. Powered by GitHub Pages. <a href="https://github.com/rmzelle/dna-flip">Code</a> on GitHub.</small></p>
+    </div>
+  </div>
+<script>
+
+//http://www.ncbi.nlm.nih.gov/pmc/articles/PMC341218/
+//https://web.archive.org/web/20170201023839/http://www.chem.qmul.ac.uk/iubmb/misc/naseq.html
+//https://en.wikipedia.org/wiki/Nucleic_acid_notation
+//TODO: add table to webpage (http://getbootstrap.com/css/#tables-condensed)
+var complementTable = {
+  "A": "T",
+  "C": "G",
+  "G": "C",
+  "T": "A",
+  "U": "A",
+  "M": "K",
+  "R": "Y",
+  "W": "W",
+  "S": "S",
+  "Y": "R",
+  "K": "M",
+  "V": "B",
+  "H": "D",
+  "D": "H",
+  "B": "V",
+  "X": "X",
+  "N": "N",
+  "a": "t",
+  "c": "g",
+  "g": "c",
+  "t": "a",
+  "u": "a",
+  "m": "k",
+  "r": "y",
+  "w": "w",
+  "s": "s",
+  "y": "r",
+  "k": "m",
+  "v": "b",
+  "h": "d",
+  "d": "h",
+  "b": "v",
+  "x": "x",
+  "n": "n"
+}
+
+// Add event listener to input field
+var inputTextArea = document.getElementById('input-text');
+inputTextArea.addEventListener('input', function() {convertInput(inputTextArea.value)}, false);
+
+// Add event listeners to radio buttons
+var radiobuttons = document.querySelectorAll("input[type='radio']");
+for (var i = 0; i < radiobuttons.length; i++) {
+  radiobuttons[i].addEventListener('change', function() {convertInput(inputTextArea.value)}, false);
+}
+
+function convertInput(input) {
+  var fastaHeader = "";
+  var inputSequence = "";
+  var outputSequence = "";
+  var outputString = "";
+  
+  // Isolate FASTA header from input sequence (if present)
+  input = input.trim();
+  if (input.charAt(0) == ">") {
+    if (input.includes("\n")) {
+      let inputLines = input.split('\n');
+      fastaHeader = inputLines[0];
+      inputLines.shift();
+      inputSequence = inputLines.join("");
+    } else {
+      fastaHeader = input;
+    }
+  } else {
+    inputSequence = input;
+  }
+  
+  // Strip whitespace and digits from inputSequence
+  inputSequence = inputSequence.replace(/\s/g, '');
+  inputSequence = inputSequence.replace(/\d/g, '');
+  
+  // Check input sequence for invalid characters
+  for (var i = 0; i < inputSequence.length; i++) {
+    if (!(complementTable.hasOwnProperty(inputSequence[i]))) {
+      document.getElementById("output-text").value = "Error: input contains unrecognized characters";
+      return;
+    }
+  }
+  
+  // Perform sequence conversion based on selection
+  var selectedConversion = document.querySelector('input[name="options"]:checked').value;
+  switch (selectedConversion) {
+    case 'forward':
+      outputSequence = inputSequence;
+      break;
+    case 'reverse':
+      outputSequence = reverseString(inputSequence);
+      break;
+    case 'complement':
+      outputSequence = complementSequence(inputSequence);
+      break;
+    case 'reverse-complement':
+      outputSequence = complementSequence(reverseString(inputSequence));
+      break;
+  }
+  
+  // Reattach FASTA header (if present)
+  if (fastaHeader.length > 0) {
+    outputString = [fastaHeader, outputSequence].join("\n");
+  } else {
+    outputString = outputSequence;
+  }
+  
+  document.getElementById("output-text").value = outputString;
+}
+
+function reverseString(inputString) {
+  var outputString = "";
+  // Based on http://eddmann.com/posts/ten-ways-to-reverse-a-string-in-javascript/
+  for (var i = inputString.length - 1; i >= 0; i--) {
+    outputString += inputString[i];
+  }
+  return outputString;
+}
+
+function complementSequence(inputString) {
+  var outputString = "";
+  for (var i = 0; i < inputString.length; i++) {
+    outputString += complementTable[inputString[i]];
+  }
+  return outputString;
+}
+</script>
+</body>
+
+</html>
