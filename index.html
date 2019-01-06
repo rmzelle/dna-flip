@@ -59,29 +59,189 @@
         </div>
       </form>
     </div>
-    <div class="col-sm-offset-1 col-sm-5">
-      <p><b>DNA-Flip</b> is a webpage for quickly obtaining the reverse, complement, or reverse complement of a DNA or RNA sequence. Sequence input may either be in the FASTA format or be plain sequence. Digits and whitespace are ignored and removed. Degenerate base symbols (per <a href="https://en.wikipedia.org/wiki/Nucleic_acid_notation">https://en.wikipedia.org/wiki/Nucleic_acid_notation</a>) are supported.</p>
-      <p>DNA-Flip is open source, free, and doesn't have ads. I care about your privacy. This webpage uses your internet browser to perform the conversion, and your sequences never leave your computer.</p>
-      <p class="bg-info">Did you find this free tool useful? Consider <a href="https://www.patreon.com/rintzezelle">supporting my open-source work on Patreon</a> for as little as $1/month, or <a href="https://www.paypal.me/RintzeZelle/2.50">buy me a coffee via PayPal</a>.<br><br>For
-        feedback, or to report any issues, please <a href="https://github.com/rmzelle/dna-flip/issues">file an issue on GitHub</a> or ping me on <a href="https://twitter.com/rintzezelle">Twitter</a>.</p>
-      <!--
+    <div class="col-sm-offset-1 col-sm-5">      
       <ul class="nav nav-tabs" id="tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+        <li role="presentation" class="active"><a href="#introduction" aria-controls="introduction" role="tab" data-toggle="tab">Introduction</a></li>
         <li role="presentation"><a href="#documentation" aria-controls="documentation" role="tab" data-toggle="tab">Documentation</a></li>
-        <li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab">About</a></li>
       </ul>
-      -->
+      
       <!-- Tab panes -->
-      <!--
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="settings">Settings</div>
+        <div role="tabpanel" class="tab-pane active" id="introduction">
+          </br>
+          <p><b>DNA-Flip</b> is a webpage for quickly obtaining the reverse, complement, or reverse complement of a DNA or RNA sequence.</p>
+          <p>DNA-Flip is open source, free, and doesn't have ads. I care about your privacy. Conversions happen right in your browser, and your sequence data never leaves your computer.</p>
+          <p class="bg-info">Did you find this free tool useful? Consider <a href="https://www.patreon.com/rintzezelle">supporting my open-source work on Patreon</a> for as little as $1/month, or <a href="https://www.paypal.me/RintzeZelle/2.50">buy me a coffee via PayPal</a>.<br><br>For
+            feedback, or to report any issues, please <a href="https://github.com/rmzelle/dna-flip/issues">file an issue on GitHub</a> or ping me on <a href="https://twitter.com/rintzezelle">Twitter</a>.</p>
+        </div>
+
         <div role="tabpanel" class="tab-pane" id="documentation">
-          <table class="table table-condensed">
+          </br>
+          <p>Sequence input may either be in the FASTA format or be plain sequence. Digits and whitespace are ignored and removed. <a href="https://en.wikipedia.org/wiki/Nucleic_acid_notation">Degenerate base symbols</a> are supported per Cornish-Bowden (1985).</p>
+          <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC341218/">Cornish-Bowden, A. (1985). Nomenclature for incompletely specified bases in nucleic acid sequences: recommendations 1984. Nucleic Acids Research, 13(9), 3021–3030.</a></>
+          <table class="table table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Description</th>
+                <th colspan="5">Represented Bases</th>
+                <th>Complement</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="active">
+                <th>A</th>
+                <td><b>A</b>denine</td>
+                <td>A</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td rowspan="5" style="vertical-align:middle">1</td>
+                <td>T</td>
+              </tr>
+              <tr class="active" >
+                <th>C</th>
+                <td><b>C</b>ytosine</td>
+                <td></td>
+                <td>C</td>
+                <td></td>
+                <td></td>
+                <td>G</td>
+              </tr>
+              <tr class="active">
+                <th>G</th>
+                <td><b>G</b>uanine</td>
+                <td></td>
+                <td></td>
+                <td>G</td>
+                <td></td>
+                <td>C</td>
+              </tr>
+              <tr class="active">
+                <th>T</th>
+                <td><b>T</b>hymine</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>T</td>
+                <td>A</td>
+              </tr>
+              <tr class="active">
+                <th>U</th>
+                <td><b>U</b>racil</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>U</td>
+                <td>A</td>
+              </tr>
+              <tr>
+                <th>R</th>
+                <td>pu<b>R</b>ine</td>
+                <td>A</td>
+                <td></td>
+                <td>G</td>
+                <td></td>
+                <td rowspan="6" style="vertical-align:middle">2</td>
+                <td>Y</td>
+              </tr>
+              <tr>
+                <th>Y</th>
+                <td>p<b>Y</b>rimidine</td>
+                <td></td>
+                <td>C</td>
+                <td></td>
+                <td>T</td>
+                <td>R</td>
+              </tr>
+              <tr>
+                <th>M</th>
+                <td>a<b>M</b>ino</td>
+                <td>A</td>
+                <td></td>
+                <td>C</td>
+                <td></td>
+                <td>K</td>
+              </tr>
+              <tr>
+                <th>K</th>
+                <td><b>K</b>eto</td>
+                <td></td>
+                <td></td>
+                <td>G</td>
+                <td>T</td>
+                <td>M</td>
+              </tr>
+              <tr>
+                <th>W</th>
+                <td><b>W</b>eak (2 hydrogen bonds)</td>
+                <td>A</td>
+                <td></td>
+                <td></td>
+                <td>T</td>
+                <td>W</td>
+              </tr>
+              <tr>
+                <th>S</th>
+                <td><b>S</b>trong (3 hydrogen bonds)</td>
+                <td></td>
+                <td>C</td>
+                <td>G</td>
+                <td></td>
+                <td>S</td>
+              </tr>
+              <tr class="active">
+                <th>B</th>
+                <td>not A</td>
+                <td></td>
+                <td>C</td>
+                <td>G</td>
+                <td>T</td>
+                <td rowspan="4" style="vertical-align:middle">3</td>
+                <td>V</td>
+              </tr>
+              <tr class="active">
+                <th>D</th>
+                <td>not C</td>
+                <td>A</td>
+                <td></td>
+                <td>G</td>
+                <td>T</td>
+                <td>H</td>
+              </tr>
+              <tr class="active">
+                <th>H</th>
+                <td>not G</td>
+                <td>A</td>
+                <td>C</td>
+                <td></td>
+                <td>T</td>
+                <td>D</td>
+              </tr>
+              <tr class="active">
+                <th>V</th>
+                <td>not T</td>
+                <td>A</td>
+                <td>C</td>
+                <td>G</td>
+                <td></td>
+                <td>B</td>
+              </tr>
+              <tr>
+                <th>N</th>
+                <td>a<b>N</b>y</td>
+                <td>A</td>
+                <td>C</td>
+                <td>G</td>
+                <td>T</td>
+                <td>4</td>
+                <td>N</td>
+              </tr>
+            </tbody>
           </table>
         </div>
-        <div role="tabpanel" class="tab-pane" id="about">...</div>
       </div>
-      -->
+
     </div>
   </div>
   </div>
@@ -103,34 +263,32 @@ var complementTable = {
   "G": "C",
   "T": "A",
   "U": "A",
-  "M": "K",
   "R": "Y",
+  "Y": "R",
+  "M": "K",
+  "K": "M",
   "W": "W",
   "S": "S",
-  "Y": "R",
-  "K": "M",
-  "V": "B",
-  "H": "D",
-  "D": "H",
   "B": "V",
-  "X": "X",
+  "D": "H",
+  "H": "D",
+  "V": "B",
   "N": "N",
   "a": "t",
   "c": "g",
   "g": "c",
   "t": "a",
   "u": "a",
-  "m": "k",
   "r": "y",
+  "y": "r",
+  "m": "k",
+  "k": "m",
   "w": "w",
   "s": "s",
-  "y": "r",
-  "k": "m",
-  "v": "b",
-  "h": "d",
-  "d": "h",
   "b": "v",
-  "x": "x",
+  "d": "h",
+  "h": "d",
+  "v": "b",
   "n": "n"
 }
 
